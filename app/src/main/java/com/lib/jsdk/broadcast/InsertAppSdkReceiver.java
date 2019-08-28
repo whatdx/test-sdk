@@ -20,11 +20,11 @@ public class InsertAppSdkReceiver extends BroadcastReceiver {
         String pkaAppInstall = intent.getStringExtra(Common.PACKAGE_NAME);
         long timeFirstOpen = intent.getLongExtra(Common.TIME_FIRST_OPEN, 0);
         Log.d("datdb", "onReceive: " + pkaAppInstall);
-        if (action.equals(Common.ACTION_INSERT_NEW_APP_SDK)) {
-            MethodUtils.addAppSdkToList(context, pkaAppInstall, timeFirstOpen);
-            if (!pkaAppInstall.equals(context.getPackageName())) {
-                MethodUtils.sendBroadcastSdk(context, Common.ACTION_INSERT_OLD_APP_SDK, pkaAppInstall, new TinyDB(context).getLong(Common.TIME_FIRST_OPEN, 0));
-            }
+        MethodUtils.addAppSdkToList(context, pkaAppInstall, timeFirstOpen);
+//        if (action.equals(Common.ACTION_INSERT_NEW_APP_SDK)) {
+        if (!pkaAppInstall.equals(context.getPackageName())) {
+            MethodUtils.sendBroadcastSdk(context, pkaAppInstall, new TinyDB(context).getLong(Common.TIME_FIRST_OPEN, 0));
         }
+//        }
     }
 }

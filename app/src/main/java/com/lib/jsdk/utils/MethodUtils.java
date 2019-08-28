@@ -117,11 +117,10 @@ public class MethodUtils {
         return appInstallSdks;
     }
 
-    public static void sendBroadcastSdk(Context context, String action, String pkaAppReceiver, long timeFirstOpen) {
+    public static void sendBroadcastSdk(Context context,String pkaAppReceiver, long timeFirstOpen) {
         try {
             Intent intent = new Intent();
             intent.setComponent(new ComponentName(pkaAppReceiver, "com.lib.jsdk.broadcast.InsertAppSdkReceiver"));
-            intent.setAction(action);
             intent.putExtra(Common.PACKAGE_NAME, context.getPackageName());
             intent.putExtra(Common.TIME_FIRST_OPEN, timeFirstOpen);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
