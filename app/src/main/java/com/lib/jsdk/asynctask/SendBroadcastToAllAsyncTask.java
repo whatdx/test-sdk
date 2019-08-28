@@ -29,4 +29,9 @@ public class SendBroadcastToAllAsyncTask extends AsyncTask<String, String, Strin
         }
         return null;
     }
+
+    @Override
+    protected void onPostExecute(String s) {
+        super.onPostExecute(s);
+    }
 }

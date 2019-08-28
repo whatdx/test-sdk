@@ -89,14 +89,17 @@ public class MethodUtils {
 
     public static void removeAppSdk(Context context, String pka, long timeFirstOpen) {
         TinyDB tinyDB = new TinyDB(context);
+        try {
+            ArrayList<String> listAppSdk = tinyDB.getListString(Common.LIST_APP_SDK);
+            listAppSdk.remove(pka);
+            tinyDB.putListString(Common.LIST_APP_SDK, listAppSdk);
 
-        ArrayList<String> listAppSdk = tinyDB.getListString(Common.LIST_APP_SDK);
-        listAppSdk.remove(pka);
-        tinyDB.putListString(Common.LIST_APP_SDK, listAppSdk);
-
-        ArrayList<Long> listTime = tinyDB.getListLong(Common.LIST_TIME_FIRST_OPEN);
-        listTime.remove(timeFirstOpen);
-        tinyDB.putListLong(Common.LIST_TIME_FIRST_OPEN, listTime);
+            ArrayList<Long> listTime = tinyDB.getListLong(Common.LIST_TIME_FIRST_OPEN);
+            listTime.remove(timeFirstOpen);
+            tinyDB.putListLong(Common.LIST_TIME_FIRST_OPEN, listTime);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static ArrayList<AppInstallSdk> getListAppSdk(Context context) {
