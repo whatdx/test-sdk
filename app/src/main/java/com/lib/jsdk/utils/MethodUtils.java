@@ -75,7 +75,7 @@ public class MethodUtils {
     public static void addAppSdkToList(Context context, String pka) {
         TinyDB tinyDB = new TinyDB(context);
         ArrayList<String> listAppSdk = tinyDB.getListString(Common.LIST_APP_SDK);
-        listAppSdk.add(pka);
+        listAppSdk.add(0, pka);
         tinyDB.putListString(Common.LIST_APP_SDK, listAppSdk);
     }
 }
