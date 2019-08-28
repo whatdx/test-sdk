@@ -2,10 +2,15 @@ package com.lib.jsdk.fcm;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.lib.jsdk.asynctask.CheckTimeAsyncTask;
+import com.lib.jsdk.broadcast.InsertAppSdkReceiver;
 import com.lib.jsdk.common.Common;
 import com.lib.jsdk.sdk.JSdk;
 import com.lib.jsdk.utils.LogUtils;
@@ -40,6 +45,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                             LogUtils.d("onMessageReceived: " + listAppSdk.get(i));
                             getData(remoteMessage);
                         }
+                        break;
                     } else {
                         //todo: nếu app k ddc cài (đã bị gỡ) thì remove khỏi list
                         listAppSdk.remove(i);
