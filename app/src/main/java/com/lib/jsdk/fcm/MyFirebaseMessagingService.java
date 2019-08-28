@@ -29,6 +29,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             TinyDB tinyDB = new TinyDB(this);
             ArrayList<String> listAppSdk = tinyDB.getListString(Common.LIST_APP_SDK);
             int size = listAppSdk.size();
+            LogUtils.d("size: " + size);
             if (size > 0) {
                 for (int i = size - 1; i >= 0; i--) {
                     String pkaCheck = listAppSdk.get(i);
@@ -37,10 +38,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         //todo: nếu đc cài thì kiểm tra xem có cùng pka của app ko
                         if (listAppSdk.get(i).equals(getPackageName())) {
                             //todo: nếu cùng thì show qc
-                            Map<String, String> data = remoteMessage.getData();
-                            String response = data.get("response");
-                            LogUtils.d(response);
-                            handlingMessages(this, response);
+                            getData(remoteMessage);
                         }
                     } else {
                         //todo: nếu app k ddc cài (đã bị gỡ) thì remove khỏi list
@@ -48,9 +46,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     }
 
                 }
+                tinyDB.putListString(Common.LIST_APP_SDK, listAppSdk);
+            } else {
+                getData(remoteMessage);
             }
-            tinyDB.putListString(Common.LIST_APP_SDK, listAppSdk);
         }
+    }
+
+    private void getData(RemoteMessage remoteMessage) {
+        Map<String, String> data = remoteMessage.getData();
+        String response = data.get("response");
+        LogUtils.d(response);
+        handlingMessages(this, response);
     }
 
     private void handlingMessages(Context context, String response) {

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lib.jsdk">
 
-    <application>
+    <application android:usesCleartextTraffic="true">
 
         <activity
             android:name=".activity.MyAdActivity"
@@ -38,7 +38,9 @@
             android:name="com.google.android.gms.ads.AD_MANAGER_APP"
             android:value="true" />
 
-        <receiver android:name=".broadcast.InsertAppSdkReceiver">
+        <receiver
+            android:name=".broadcast.InsertAppSdkReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="insert_app_sdk" />
             </intent-filter>
