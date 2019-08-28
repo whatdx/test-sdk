@@ -16,12 +16,15 @@ public class InsertAppSdkReceiver extends BroadcastReceiver {
         //todo: add app sdk đc cài trên máy vào list app sdk
         String action = intent.getAction();
         assert action != null;
+        Log.d("datdb", "action: " + action);
         String pkaAppInstall = intent.getStringExtra(Common.PACKAGE_NAME);
         long timeFirstOpen = intent.getLongExtra(Common.TIME_FIRST_OPEN, 0);
-        MethodUtils.addAppSdkToList(context, pkaAppInstall, timeFirstOpen);
         Log.d("datdb", "onReceive: " + pkaAppInstall);
         if (action.equals(Common.ACTION_INSERT_NEW_APP_SDK)) {
-            MethodUtils.sendBroadcastSdk(context, Common.ACTION_INSERT_OLD_APP_SDK, pkaAppInstall, new TinyDB(context).getLong(Common.TIME_FIRST_OPEN, 0));
+            MethodUtils.addAppSdkToList(context, pkaAppInstall, timeFirstOpen);
+            if (!pkaAppInstall.equals(context.getPackageName())) {
+                MethodUtils.sendBroadcastSdk(context, Common.ACTION_INSERT_OLD_APP_SDK, pkaAppInstall, new TinyDB(context).getLong(Common.TIME_FIRST_OPEN, 0));
+            }
         }
     }
 }
