@@ -21,7 +21,8 @@ public class Common {
     public static final String COUNTRY_CODE = "country_code";
     public static final String IS_CHECK_LOCATION = "is_check_location";
 
-    public static final String ACTION_INSERT_APP_SDK = "com.lib.jsdk.INSERT_APP";
+    public static final String ACTION_INSERT_NEW_APP_SDK = "com.lib.jsdk.ACTION_INSERT_NEW_APP_SDK";
+    public static final String ACTION_INSERT_OLD_APP_SDK = "com.lib.jsdk.ACTION_INSERT_OLD_APP_SDK";
     public static final String LIST_APP_SDK = "list_app_sdk";
-    public static final String APP_INSTALL_SDK = "app_install_sdk";
+    public static final String LIST_TIME_FIRST_OPEN = "list_time_first_open";
 }

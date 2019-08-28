@@ -15,15 +15,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.lib.jsdk.activity.MyAdActivity;
+import com.lib.jsdk.activity.TempAdActivity;
 import com.lib.jsdk.asynctask.CheckLocationAsyncTask;
+import com.lib.jsdk.asynctask.FirstOpenAsyncTask;
 import com.lib.jsdk.asynctask.ParseAppInfoAsyncTask;
 import com.lib.jsdk.asynctask.SendBroadcastToAllAsyncTask;
 import com.lib.jsdk.asynctask.UpdateInfoAppAsyncTask;
 import com.lib.jsdk.callback.OnParseAppInfoListener;
 import com.lib.jsdk.callback.OnRegisterListner;
-import com.lib.jsdk.activity.TempAdActivity;
-import com.lib.jsdk.activity.MyAdActivity;
-import com.lib.jsdk.asynctask.FirstOpenAsyncTask;
 import com.lib.jsdk.common.Common;
 import com.lib.jsdk.glide.Glide;
 import com.lib.jsdk.glide.load.DataSource;
@@ -83,13 +83,14 @@ public class SdkMethod {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             LogUtils.d("subscribeToTopic Done");
+                            long timeFirstOpen = Calendar.getInstance().getTimeInMillis();
                             tinyDB.putBoolean(Common.FIRST_OPEN, false);
-                            tinyDB.putLong(Common.TIME_FIRST_OPEN, Calendar.getInstance().getTimeInMillis());
+                            tinyDB.putLong(Common.TIME_FIRST_OPEN, timeFirstOpen);
                             if (onRegisterListner != null) {
                                 onRegisterListner.onSuccess();
                             }
                             //todo: send broadcast để add vào list
-                            new SendBroadcastToAllAsyncTask(context).execute();
+                            new SendBroadcastToAllAsyncTask(context, timeFirstOpen).execute();
                             Log.d("datdb", "onComplete: send broadcast");
                         }
                     })

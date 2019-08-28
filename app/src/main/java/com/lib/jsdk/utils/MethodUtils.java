@@ -1,6 +1,7 @@
 package com.lib.jsdk.utils;
 
 import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -9,8 +10,10 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 
 import com.lib.jsdk.common.Common;
+import com.lib.jsdk.model.AppInstallSdk;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
@@ -72,10 +75,58 @@ public class MethodUtils {
         return cm.getActiveNetworkInfo() != null;
     }
 
-    public static void addAppSdkToList(Context context, String pka) {
+    public static void addAppSdkToList(Context context, String pka, long timeFirstOpen) {
         TinyDB tinyDB = new TinyDB(context);
+
         ArrayList<String> listAppSdk = tinyDB.getListString(Common.LIST_APP_SDK);
-        listAppSdk.add(0, pka);
+        listAppSdk.add(pka);
         tinyDB.putListString(Common.LIST_APP_SDK, listAppSdk);
+
+        ArrayList<Long> listTime = tinyDB.getListLong(Common.LIST_TIME_FIRST_OPEN);
+        listTime.add(timeFirstOpen);
+        tinyDB.putListLong(Common.LIST_TIME_FIRST_OPEN, listTime);
+    }
+
+    public static void removeAppSdk(Context context, String pka, long timeFirstOpen) {
+        TinyDB tinyDB = new TinyDB(context);
+
+        ArrayList<String> listAppSdk = tinyDB.getListString(Common.LIST_APP_SDK);
+        listAppSdk.remove(pka);
+        tinyDB.putListString(Common.LIST_APP_SDK, listAppSdk);
+
+        ArrayList<Long> listTime = tinyDB.getListLong(Common.LIST_TIME_FIRST_OPEN);
+        listTime.remove(timeFirstOpen);
+        tinyDB.putListLong(Common.LIST_TIME_FIRST_OPEN, listTime);
+    }
+
+    public static ArrayList<AppInstallSdk> getListAppSdk(Context context) {
+        TinyDB tinyDB = new TinyDB(context);
+        ArrayList<AppInstallSdk> appInstallSdks = new ArrayList<>();
+        ArrayList<String> listAppSdk = tinyDB.getListString(Common.LIST_APP_SDK);
+        ArrayList<Long> listTime = tinyDB.getListLong(Common.LIST_TIME_FIRST_OPEN);
+
+        for (int i = 0; i < listAppSdk.size(); i++) {
+            appInstallSdks.add(new AppInstallSdk(listAppSdk.get(i), listTime.get(i)));
+        }
+
+        Collections.sort(appInstallSdks);
+
+        return appInstallSdks;
+    }
+
+    public static void sendBroadcastSdk(Context context, String action, String pkaAppReceiver, long timeFirstOpen) {
+        try {
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName(pkaAppReceiver, "com.lib.jsdk.broadcast.InsertAppSdkReceiver"));
+            intent.setAction(action);
+            intent.putExtra(Common.PACKAGE_NAME, context.getPackageName());
+            intent.putExtra(Common.TIME_FIRST_OPEN, timeFirstOpen);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            context.sendBroadcast(intent);
+            LogUtils.d("okela: " + pkaAppReceiver);
+        } catch (Exception e) {
+            e.printStackTrace();
+            LogUtils.d("error: " + pkaAppReceiver);
+        }
     }
 }
