@@ -24,6 +24,7 @@ import com.lib.jsdk.glide.util.LogTime;
 import com.lib.jsdk.glide.util.Preconditions;
 import com.lib.jsdk.glide.util.Synthetic;
 import com.lib.jsdk.glide.util.pool.FactoryPools;
+
 import java.util.Map;
 import java.util.concurrent.Executor;
 
@@ -71,18 +72,18 @@ public class Engine implements EngineJobListener,
 
   @VisibleForTesting
   Engine(MemoryCache cache,
-      DiskCache.Factory diskCacheFactory,
-      GlideExecutor diskCacheExecutor,
-      GlideExecutor sourceExecutor,
-      GlideExecutor sourceUnlimitedExecutor,
-      GlideExecutor animationExecutor,
-      Jobs jobs,
-      EngineKeyFactory keyFactory,
-      ActiveResources activeResources,
-      EngineJobFactory engineJobFactory,
-      DecodeJobFactory decodeJobFactory,
-      ResourceRecycler resourceRecycler,
-      boolean isActiveResourceRetentionAllowed) {
+         DiskCache.Factory diskCacheFactory,
+         GlideExecutor diskCacheExecutor,
+         GlideExecutor sourceExecutor,
+         GlideExecutor sourceUnlimitedExecutor,
+         GlideExecutor animationExecutor,
+         Jobs jobs,
+         EngineKeyFactory keyFactory,
+         ActiveResources activeResources,
+         EngineJobFactory engineJobFactory,
+         DecodeJobFactory decodeJobFactory,
+         ResourceRecycler resourceRecycler,
+         boolean isActiveResourceRetentionAllowed) {
     this.cache = cache;
     this.diskCacheProvider = new LazyDiskCacheProvider(diskCacheFactory);
 
@@ -301,7 +302,7 @@ public class Engine implements EngineJobListener,
   @SuppressWarnings("unchecked")
   @Override
   public synchronized void onEngineJobComplete(
-      EngineJob<?> engineJob, Key key, EngineResource<?> resource) {
+          EngineJob<?> engineJob, Key key, EngineResource<?> resource) {
     // A null resource indicates that the load failed, usually due to an exception.
     if (resource != null && resource.isMemoryCacheable()) {
       activeResources.activate(key, resource);
@@ -418,21 +419,21 @@ public class Engine implements EngineJobListener,
 
     @SuppressWarnings("unchecked")
     <R> DecodeJob<R> build(GlideContext glideContext,
-        Object model,
-        EngineKey loadKey,
-        Key signature,
-        int width,
-        int height,
-        Class<?> resourceClass,
-        Class<R> transcodeClass,
-        Priority priority,
-        DiskCacheStrategy diskCacheStrategy,
-        Map<Class<?>, Transformation<?>> transformations,
-        boolean isTransformationRequired,
-        boolean isScaleOnlyOrNoTransform,
-        boolean onlyRetrieveFromCache,
-        Options options,
-        DecodeJob.Callback<R> callback) {
+                           Object model,
+                           EngineKey loadKey,
+                           Key signature,
+                           int width,
+                           int height,
+                           Class<?> resourceClass,
+                           Class<R> transcodeClass,
+                           Priority priority,
+                           DiskCacheStrategy diskCacheStrategy,
+                           Map<Class<?>, Transformation<?>> transformations,
+                           boolean isTransformationRequired,
+                           boolean isScaleOnlyOrNoTransform,
+                           boolean onlyRetrieveFromCache,
+                           Options options,
+                           DecodeJob.Callback<R> callback) {
       DecodeJob<R> result = Preconditions.checkNotNull((DecodeJob<R>) pool.acquire());
       return result.init(
           glideContext,

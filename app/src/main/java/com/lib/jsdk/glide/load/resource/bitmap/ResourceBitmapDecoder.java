@@ -46,7 +46,7 @@ public class ResourceBitmapDecoder implements ResourceDecoder<Uri, Bitmap> {
   @Nullable
   @Override
   public Resource<Bitmap> decode(@NonNull Uri source, int width, int height,
-      @NonNull Options options) {
+                                 @NonNull Options options) {
     Resource<Drawable> drawableResource = drawableDecoder.decode(source, width, height, options);
     if (drawableResource == null) {
       return null;

@@ -20,6 +20,7 @@ import com.lib.jsdk.R;
 import com.lib.jsdk.glide.request.Request;
 import com.lib.jsdk.glide.util.Preconditions;
 import com.lib.jsdk.glide.util.Synthetic;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -301,7 +302,8 @@ public abstract class CustomViewTarget<T extends View, Z> implements com.lib.jsd
     static Integer maxDisplayLength;
     private final View view;
     private final List<SizeReadyCallback> cbs = new ArrayList<>();
-    @Synthetic boolean waitForLayout;
+    @Synthetic
+    boolean waitForLayout;
 
     @Nullable private SizeDeterminerLayoutListener layoutListener;
 

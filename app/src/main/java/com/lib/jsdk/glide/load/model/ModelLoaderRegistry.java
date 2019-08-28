@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.core.util.Pools;
 
 import com.lib.jsdk.glide.util.Synthetic;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -61,7 +62,7 @@ public class ModelLoaderRegistry {
   }
 
   private <Model, Data> void tearDown(
-      @NonNull List<com.lib.jsdk.glide.load.model.ModelLoaderFactory<? extends Model, ? extends Data>> factories) {
+      @NonNull List<ModelLoaderFactory<? extends Model, ? extends Data>> factories) {
     for (ModelLoaderFactory<? extends Model, ? extends Data> factory : factories) {
       factory.teardown();
     }
@@ -71,11 +72,11 @@ public class ModelLoaderRegistry {
   // to them.
   @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
   @NonNull
-  public <A> List<com.lib.jsdk.glide.load.model.ModelLoader<A, ?>> getModelLoaders(@NonNull A model) {
-    List<com.lib.jsdk.glide.load.model.ModelLoader<A, ?>> modelLoaders = getModelLoadersForClass(getClass(model));
+  public <A> List<ModelLoader<A, ?>> getModelLoaders(@NonNull A model) {
+    List<ModelLoader<A, ?>> modelLoaders = getModelLoadersForClass(getClass(model));
     int size = modelLoaders.size();
     boolean isEmpty = true;
-    List<com.lib.jsdk.glide.load.model.ModelLoader<A, ?>> filteredLoaders = Collections.emptyList();
+    List<ModelLoader<A, ?>> filteredLoaders = Collections.emptyList();
     //noinspection ForLoopReplaceableByForEach to improve perf
     for (int i = 0; i < size; i++) {
       com.lib.jsdk.glide.load.model.ModelLoader<A, ?> loader = modelLoaders.get(i);
@@ -101,9 +102,9 @@ public class ModelLoaderRegistry {
   }
 
   @NonNull
-  private synchronized <A> List<com.lib.jsdk.glide.load.model.ModelLoader<A, ?>> getModelLoadersForClass(
+  private synchronized <A> List<ModelLoader<A, ?>> getModelLoadersForClass(
       @NonNull Class<A> modelClass) {
-    List<com.lib.jsdk.glide.load.model.ModelLoader<A, ?>> loaders = cache.get(modelClass);
+    List<ModelLoader<A, ?>> loaders = cache.get(modelClass);
     if (loaders == null) {
       loaders = Collections.unmodifiableList(multiModelLoaderFactory.build(modelClass));
       cache.put(modelClass, loaders);
@@ -127,7 +128,7 @@ public class ModelLoaderRegistry {
       cachedModelLoaders.clear();
     }
 
-    public <Model> void put(Class<Model> modelClass, List<com.lib.jsdk.glide.load.model.ModelLoader<Model, ?>> loaders) {
+    public <Model> void put(Class<Model> modelClass, List<ModelLoader<Model, ?>> loaders) {
       Entry<?> previous = cachedModelLoaders.put(modelClass, new Entry<>(loaders));
       if (previous != null) {
         throw new IllegalStateException("Already cached loaders for model: " + modelClass);
@@ -136,13 +137,14 @@ public class ModelLoaderRegistry {
 
     @Nullable
     @SuppressWarnings("unchecked")
-    public <Model> List<com.lib.jsdk.glide.load.model.ModelLoader<Model, ?>> get(Class<Model> modelClass) {
+    public <Model> List<ModelLoader<Model, ?>> get(Class<Model> modelClass) {
       Entry<Model> entry = (Entry<Model>) cachedModelLoaders.get(modelClass);
       return entry == null ? null : entry.loaders;
     }
 
     private static class Entry<Model> {
-      @Synthetic final List<com.lib.jsdk.glide.load.model.ModelLoader<Model, ?>> loaders;
+      @Synthetic
+      final List<ModelLoader<Model, ?>> loaders;
 
       public Entry(List<ModelLoader<Model, ?>> loaders) {
         this.loaders = loaders;

@@ -11,6 +11,7 @@ import com.lib.jsdk.glide.load.engine.bitmap_recycle.ArrayPool;
 import com.lib.jsdk.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.lib.jsdk.glide.util.ExceptionCatchingInputStream;
 import com.lib.jsdk.glide.util.MarkEnforcingInputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -34,7 +35,7 @@ public class StreamBitmapDecoder implements ResourceDecoder<InputStream, Bitmap>
 
   @Override
   public Resource<Bitmap> decode(@NonNull InputStream source, int width, int height,
-      @NonNull Options options)
+                                 @NonNull Options options)
       throws IOException {
 
     // Use to fix the mark limit to avoid allocating buffers that fit entire images.
@@ -79,7 +80,7 @@ public class StreamBitmapDecoder implements ResourceDecoder<InputStream, Bitmap>
     private final ExceptionCatchingInputStream exceptionStream;
 
     UntrustedCallbacks(RecyclableBufferedInputStream bufferedStream,
-        ExceptionCatchingInputStream exceptionStream) {
+                       ExceptionCatchingInputStream exceptionStream) {
       this.bufferedStream = bufferedStream;
       this.exceptionStream = exceptionStream;
     }

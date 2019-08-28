@@ -26,6 +26,7 @@ import com.lib.jsdk.glide.Glide;
 import com.lib.jsdk.glide.RequestManager;
 import com.lib.jsdk.glide.util.Preconditions;
 import com.lib.jsdk.glide.util.Util;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,7 +57,7 @@ public class RequestManagerRetriever implements Handler.Callback {
    */
   @SuppressWarnings("deprecation")
   @VisibleForTesting
-  final Map<android.app.FragmentManager, com.lib.jsdk.glide.manager.RequestManagerFragment> pendingRequestManagerFragments =
+  final Map<android.app.FragmentManager, RequestManagerFragment> pendingRequestManagerFragments =
       new HashMap<>();
 
   /**
@@ -407,7 +408,7 @@ public class RequestManagerRetriever implements Handler.Callback {
 
   @NonNull
   private SupportRequestManagerFragment getSupportRequestManagerFragment(
-      @NonNull final FragmentManager fm, @Nullable Fragment parentHint, boolean isParentVisible) {
+          @NonNull final FragmentManager fm, @Nullable Fragment parentHint, boolean isParentVisible) {
     SupportRequestManagerFragment current =
         (SupportRequestManagerFragment) fm.findFragmentByTag(FRAGMENT_TAG);
     if (current == null) {

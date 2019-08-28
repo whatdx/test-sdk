@@ -19,6 +19,7 @@ import androidx.annotation.VisibleForTesting;
 import com.lib.jsdk.glide.request.Request;
 import com.lib.jsdk.glide.util.Preconditions;
 import com.lib.jsdk.glide.util.Synthetic;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ import java.util.List;
  *
  * @param <T> The specific subclass of view wrapped by this target.
  * @param <Z> The resource type this target will receive.
- * @deprecated Use {@link CustomViewTarget}. Using this class is unsafe without implementing {@link
+ * @deprecated Use {@link CustomViewTarget }. Using this class is unsafe without implementing {@link
  *     #onLoadCleared} and results in recycled bitmaps being referenced from the UI and hard to
  *     root-cause crashes.
  */
@@ -123,7 +124,8 @@ public abstract class ViewTarget<T extends View, Z> extends BaseTarget<Z> {
   }
 
   @SuppressWarnings("WeakerAccess")
-  @Synthetic void resumeMyRequest() {
+  @Synthetic
+  void resumeMyRequest() {
     Request request = getRequest();
     if (request != null && request.isCleared()) {
       request.begin();
@@ -131,7 +133,8 @@ public abstract class ViewTarget<T extends View, Z> extends BaseTarget<Z> {
   }
 
   @SuppressWarnings("WeakerAccess")
-  @Synthetic void pauseMyRequest() {
+  @Synthetic
+  void pauseMyRequest() {
     Request request = getRequest();
     // If the Request were cleared by the developer, it would be null here. The only way it's
     // present is if the developer hasn't previously cleared this Target.
@@ -319,7 +322,8 @@ public abstract class ViewTarget<T extends View, Z> extends BaseTarget<Z> {
     static Integer maxDisplayLength;
     private final View view;
     private final List<SizeReadyCallback> cbs = new ArrayList<>();
-    @Synthetic boolean waitForLayout;
+    @Synthetic
+    boolean waitForLayout;
 
     @Nullable private SizeDeterminerLayoutListener layoutListener;
 

@@ -15,6 +15,7 @@ import com.lib.jsdk.glide.load.engine.cache.MemoryCache;
 import com.lib.jsdk.glide.load.resource.bitmap.BitmapResource;
 import com.lib.jsdk.glide.util.Synthetic;
 import com.lib.jsdk.glide.util.Util;
+
 import java.security.MessageDigest;
 import java.util.HashSet;
 import java.util.Set;
@@ -61,7 +62,7 @@ final class BitmapPreFillRunner implements Runnable {
   private final MemoryCache memoryCache;
   private final com.lib.jsdk.glide.load.engine.prefill.PreFillQueue toPrefill;
   private final Clock clock;
-  private final Set<com.lib.jsdk.glide.load.engine.prefill.PreFillType> seenTypes = new HashSet<>();
+  private final Set<PreFillType> seenTypes = new HashSet<>();
   private final Handler handler;
 
   private long currentDelay = INITIAL_BACKOFF_MS;
@@ -70,7 +71,7 @@ final class BitmapPreFillRunner implements Runnable {
   // Public API.
   @SuppressWarnings("WeakerAccess")
   public BitmapPreFillRunner(
-      BitmapPool bitmapPool, MemoryCache memoryCache, com.lib.jsdk.glide.load.engine.prefill.PreFillQueue allocationOrder) {
+          BitmapPool bitmapPool, MemoryCache memoryCache, com.lib.jsdk.glide.load.engine.prefill.PreFillQueue allocationOrder) {
     this(
         bitmapPool,
         memoryCache,

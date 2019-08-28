@@ -35,6 +35,23 @@ public class MethodUtils {
         return false;
     }
 
+    public static ArrayList<String> getAllApp(Context context) {
+        ArrayList<String> listPackage = new ArrayList<>();
+        PackageManager manager = context.getPackageManager();
+        List<ApplicationInfo> applicationInfos = manager.getInstalledApplications(PackageManager.GET_META_DATA);
+
+        for (ApplicationInfo app : applicationInfos) {
+            if (manager.getLaunchIntentForPackage(app.packageName) != null) {
+                if ((app.flags & ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0 || (app.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+
+                } else {
+                    listPackage.add(app.packageName);
+                }
+            }
+        }
+        return listPackage;
+    }
+
     public static void intentGPlay(Context context, String packageName) {
         try {
             context.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));

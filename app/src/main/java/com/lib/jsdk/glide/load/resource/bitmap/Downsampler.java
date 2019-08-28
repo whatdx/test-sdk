@@ -25,6 +25,7 @@ import com.lib.jsdk.glide.request.target.Target;
 import com.lib.jsdk.glide.util.LogTime;
 import com.lib.jsdk.glide.util.Preconditions;
 import com.lib.jsdk.glide.util.Util;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -115,7 +116,7 @@ public final class Downsampler {
       // Do nothing.
     }
   };
-  private static final Set<ImageHeaderParser.ImageType> TYPES_THAT_USE_POOL_PRE_KITKAT =
+  private static final Set<ImageType> TYPES_THAT_USE_POOL_PRE_KITKAT =
       Collections.unmodifiableSet(
           EnumSet.of(
               ImageHeaderParser.ImageType.JPEG,
@@ -135,7 +136,7 @@ public final class Downsampler {
   private final HardwareConfigState hardwareConfigState = HardwareConfigState.getInstance();
 
   public Downsampler(List<ImageHeaderParser> parsers, DisplayMetrics displayMetrics,
-      BitmapPool bitmapPool, ArrayPool byteArrayPool) {
+                     BitmapPool bitmapPool, ArrayPool byteArrayPool) {
     this.parsers = parsers;
     this.displayMetrics = Preconditions.checkNotNull(displayMetrics);
     this.bitmapPool = Preconditions.checkNotNull(bitmapPool);
@@ -160,7 +161,7 @@ public final class Downsampler {
    * @see #decode(InputStream, int, int, Options, DecodeCallbacks)
    */
   public Resource<Bitmap> decode(InputStream is, int outWidth, int outHeight,
-      Options options) throws IOException {
+                                 Options options) throws IOException {
     return decode(is, outWidth, outHeight, options, EMPTY_CALLBACKS);
   }
 
@@ -190,7 +191,7 @@ public final class Downsampler {
    */
   @SuppressWarnings({"resource", "deprecation"})
   public Resource<Bitmap> decode(InputStream is, int requestedWidth, int requestedHeight,
-      Options options, DecodeCallbacks callbacks) throws IOException {
+                                 Options options, DecodeCallbacks callbacks) throws IOException {
     Preconditions.checkArgument(is.markSupported(), "You must provide an InputStream that supports"
         + " mark()");
 
@@ -216,10 +217,10 @@ public final class Downsampler {
   }
 
   private Bitmap decodeFromWrappedStreams(InputStream is,
-      BitmapFactory.Options options, DownsampleStrategy downsampleStrategy,
-      DecodeFormat decodeFormat, boolean isHardwareConfigAllowed, int requestedWidth,
-      int requestedHeight, boolean fixBitmapToRequestedDimensions,
-      DecodeCallbacks callbacks) throws IOException {
+                                          BitmapFactory.Options options, DownsampleStrategy downsampleStrategy,
+                                          DecodeFormat decodeFormat, boolean isHardwareConfigAllowed, int requestedWidth,
+                                          int requestedHeight, boolean fixBitmapToRequestedDimensions,
+                                          DecodeCallbacks callbacks) throws IOException {
     long startTime = LogTime.getLogTime();
 
     int[] sourceDimensions = getDimensions(is, options, callbacks, bitmapPool);
@@ -664,7 +665,7 @@ public final class Downsampler {
   @SuppressWarnings("PMD.CollapsibleIfStatements")
   @TargetApi(Build.VERSION_CODES.O)
   private static void setInBitmap(
-      BitmapFactory.Options options, BitmapPool bitmapPool, int width, int height) {
+          BitmapFactory.Options options, BitmapPool bitmapPool, int width, int height) {
     @Nullable Config expectedConfig = null;
     // Avoid short circuiting, it appears to break on some devices.
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

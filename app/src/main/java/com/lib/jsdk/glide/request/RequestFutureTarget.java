@@ -12,6 +12,7 @@ import com.lib.jsdk.glide.request.target.SizeReadyCallback;
 import com.lib.jsdk.glide.request.target.Target;
 import com.lib.jsdk.glide.request.transition.Transition;
 import com.lib.jsdk.glide.util.Util;
+
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -231,7 +232,7 @@ public class RequestFutureTarget<R> implements FutureTarget<R>, RequestListener<
 
   @Override
   public synchronized boolean onLoadFailed(
-      @Nullable GlideException e, Object model, Target<R> target, boolean isFirstResource) {
+          @Nullable GlideException e, Object model, Target<R> target, boolean isFirstResource) {
     loadFailed = true;
     exception = e;
     waiter.notifyAll(this);
@@ -240,7 +241,7 @@ public class RequestFutureTarget<R> implements FutureTarget<R>, RequestListener<
 
   @Override
   public synchronized boolean onResourceReady(
-      R resource, Object model, Target<R> target, DataSource dataSource, boolean isFirstResource) {
+          R resource, Object model, Target<R> target, DataSource dataSource, boolean isFirstResource) {
     // We might get a null result.
     resultReceived = true;
     this.resource = resource;

@@ -9,6 +9,7 @@ import com.lib.jsdk.glide.ListPreloader;
 import com.lib.jsdk.glide.request.target.SizeReadyCallback;
 import com.lib.jsdk.glide.request.target.ViewTarget;
 import com.lib.jsdk.glide.request.transition.Transition;
+
 import java.util.Arrays;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Arrays;
  * @param <T> The type of the model the size should be provided for.
  */
 public class ViewPreloadSizeProvider<T> implements ListPreloader.PreloadSizeProvider<T>,
-    SizeReadyCallback {
+        SizeReadyCallback {
   private int[] size;
   // We need to keep a strong reference to the Target so that it isn't garbage collected due to a
   // weak reference

@@ -7,6 +7,7 @@ import com.lib.jsdk.glide.load.Key;
 import com.lib.jsdk.glide.load.Options;
 import com.lib.jsdk.glide.load.data.DataFetcher;
 import com.lib.jsdk.glide.util.Preconditions;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -53,7 +54,7 @@ public interface ModelLoader<Model, Data> {
     }
 
     public LoadData(@NonNull Key sourceKey, @NonNull List<Key> alternateKeys,
-        @NonNull DataFetcher<Data> fetcher) {
+                    @NonNull DataFetcher<Data> fetcher) {
       this.sourceKey = Preconditions.checkNotNull(sourceKey);
       this.alternateKeys = Preconditions.checkNotNull(alternateKeys);
       this.fetcher = Preconditions.checkNotNull(fetcher);

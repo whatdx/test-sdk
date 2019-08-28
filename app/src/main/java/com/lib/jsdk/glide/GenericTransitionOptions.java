@@ -15,7 +15,7 @@ import com.lib.jsdk.glide.request.transition.ViewPropertyTransition;
 // Public API.
 @SuppressWarnings({"PMD.UseUtilityClass", "unused"})
 public final class GenericTransitionOptions<TranscodeType> extends
-    TransitionOptions<GenericTransitionOptions<TranscodeType>, TranscodeType> {
+        TransitionOptions<GenericTransitionOptions<TranscodeType>, TranscodeType> {
   /**
    * Removes any existing animation put on the builder.
    *

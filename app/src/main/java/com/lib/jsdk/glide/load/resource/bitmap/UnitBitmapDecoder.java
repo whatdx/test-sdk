@@ -22,7 +22,7 @@ public final class UnitBitmapDecoder implements ResourceDecoder<Bitmap, Bitmap> 
 
   @Override
   public Resource<Bitmap> decode(@NonNull Bitmap source, int width, int height,
-      @NonNull Options options) {
+                                 @NonNull Options options) {
     return new NonOwnedBitmapResource(source);
   }
 

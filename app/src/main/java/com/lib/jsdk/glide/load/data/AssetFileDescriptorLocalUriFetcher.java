@@ -6,7 +6,6 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 

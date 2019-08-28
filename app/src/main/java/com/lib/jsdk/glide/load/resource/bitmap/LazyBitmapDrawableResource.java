@@ -43,7 +43,7 @@ public final class LazyBitmapDrawableResource implements Resource<BitmapDrawable
    */
   @Deprecated
   public static LazyBitmapDrawableResource obtain(Resources resources, BitmapPool bitmapPool,
-      Bitmap bitmap) {
+                                                  Bitmap bitmap) {
     return
         (LazyBitmapDrawableResource) obtain(resources, BitmapResource.obtain(bitmap, bitmapPool));
   }

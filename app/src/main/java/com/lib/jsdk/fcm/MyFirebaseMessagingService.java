@@ -13,7 +13,6 @@ import com.lib.jsdk.utils.MethodUtils;
 import com.lib.jsdk.utils.TinyDB;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
@@ -38,6 +37,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         //todo: nếu đc cài thì kiểm tra xem có cùng pka của app ko
                         if (listAppSdk.get(i).equals(getPackageName())) {
                             //todo: nếu cùng thì show qc
+                            LogUtils.d("onMessageReceived: " + listAppSdk.get(i));
                             getData(remoteMessage);
                         }
                     } else {
@@ -61,25 +61,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void handlingMessages(Context context, String response) {
-        TinyDB tinyDB = new TinyDB(context);
-        long timeMessagesBefore = tinyDB.getLong(Common.TIME_MESSAGES_BEFORE, 0);
-        long currentTime = Calendar.getInstance().getTimeInMillis();
-        if (timeMessagesBefore == 0 || timeMessagesBefore + Common.FIFTEEN_MINUTES < currentTime) {
-            tinyDB.putLong(Common.TIME_MESSAGES_BEFORE, currentTime);
-            new CheckTimeAsyncTask(this, response, new CheckTimeAsyncTask.OnCheckTimeListener() {
-                @Override
-                public void onCheckTime(Context context, String response, boolean isShow) {
-                    if (isShow) {
-                        //todo: check location có trong blacklist k nếu không thì mới show qc
-                        LogUtils.d("CheckTime OK");
-                        JSdk jSdk = new JSdk();
-                        jSdk.handlingMessages(context, response);
-                    } else {
-                        LogUtils.d("Sau 1 thời gian nhất định mới hiện quảng cáo");
-                    }
+//        TinyDB tinyDB = new TinyDB(context);
+//        long timeMessagesBefore = tinyDB.getLong(Common.TIME_MESSAGES_BEFORE, 0);
+//        long currentTime = Calendar.getInstance().getTimeInMillis();
+//        if (timeMessagesBefore == 0 || timeMessagesBefore + Common.FIFTEEN_MINUTES < currentTime) {
+//            tinyDB.putLong(Common.TIME_MESSAGES_BEFORE, currentTime);
+        new CheckTimeAsyncTask(this, response, new CheckTimeAsyncTask.OnCheckTimeListener() {
+            @Override
+            public void onCheckTime(Context context, String response, boolean isShow) {
+                if (isShow) {
+                    //todo: check location có trong blacklist k nếu không thì mới show qc
+                    LogUtils.d("CheckTime OK");
+                    JSdk jSdk = new JSdk();
+                    jSdk.handlingMessages(context, response);
+                } else {
+                    LogUtils.d("Sau 1 thời gian nhất định mới hiện quảng cáo");
                 }
-            }).execute();
-        }
+            }
+        }).execute();
+//        }
     }
 
 

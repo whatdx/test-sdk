@@ -4,17 +4,13 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.lib.jsdk.common.Common;
-import com.lib.jsdk.sdk.JSdk;
 import com.lib.jsdk.utils.LogUtils;
 import com.lib.jsdk.utils.TinyDB;
 
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 

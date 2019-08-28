@@ -11,6 +11,7 @@ import com.lib.jsdk.glide.Glide;
 import com.lib.jsdk.glide.load.Transformation;
 import com.lib.jsdk.glide.load.engine.Resource;
 import com.lib.jsdk.glide.load.engine.bitmap_recycle.BitmapPool;
+
 import java.security.MessageDigest;
 
 /**
@@ -48,7 +49,7 @@ public class DrawableTransformation implements Transformation<Drawable> {
   @NonNull
   @Override
   public Resource<Drawable> transform(@NonNull Context context,
-      @NonNull Resource<Drawable> resource, int outWidth, int outHeight) {
+                                      @NonNull Resource<Drawable> resource, int outWidth, int outHeight) {
     BitmapPool bitmapPool = Glide.get(context).getBitmapPool();
     Drawable drawable = resource.get();
     Resource<Bitmap> bitmapResourceToTransform =

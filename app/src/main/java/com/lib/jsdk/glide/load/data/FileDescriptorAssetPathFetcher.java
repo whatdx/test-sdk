@@ -5,7 +5,6 @@ import android.os.ParcelFileDescriptor;
 
 import androidx.annotation.NonNull;
 
-
 import java.io.IOException;
 
 /**

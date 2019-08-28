@@ -12,6 +12,7 @@ import com.lib.jsdk.glide.load.data.DataFetcher;
 import com.lib.jsdk.glide.load.data.DataFetcher.DataCallback;
 import com.lib.jsdk.glide.load.engine.GlideException;
 import com.lib.jsdk.glide.util.Preconditions;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,10 +26,10 @@ import java.util.List;
  */
 class MultiModelLoader<Model, Data> implements com.lib.jsdk.glide.load.model.ModelLoader<Model, Data> {
 
-  private final List<com.lib.jsdk.glide.load.model.ModelLoader<Model, Data>> modelLoaders;
+  private final List<ModelLoader<Model, Data>> modelLoaders;
   private final Pools.Pool<List<Throwable>> exceptionListPool;
 
-  MultiModelLoader(@NonNull List<com.lib.jsdk.glide.load.model.ModelLoader<Model, Data>> modelLoaders,
+  MultiModelLoader(@NonNull List<ModelLoader<Model, Data>> modelLoaders,
       @NonNull Pools.Pool<List<Throwable>> exceptionListPool) {
     this.modelLoaders = modelLoaders;
     this.exceptionListPool = exceptionListPool;
@@ -36,7 +37,7 @@ class MultiModelLoader<Model, Data> implements com.lib.jsdk.glide.load.model.Mod
 
   @Override
   public LoadData<Data> buildLoadData(@NonNull Model model, int width, int height,
-      @NonNull Options options) {
+                                      @NonNull Options options) {
     Key sourceKey = null;
     int size = modelLoaders.size();
     List<DataFetcher<Data>> fetchers = new ArrayList<>(size);

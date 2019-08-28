@@ -1,6 +1,7 @@
 package com.lib.jsdk.glide.request.transition;
 
 import android.graphics.drawable.Drawable;
+
 import com.lib.jsdk.glide.load.DataSource;
 
 /**

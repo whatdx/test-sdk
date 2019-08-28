@@ -15,7 +15,7 @@ import com.lib.jsdk.glide.util.Util;
  * A resource wrapping a {@link Bitmap} object.
  */
 public class BitmapResource implements Resource<Bitmap>,
-    Initializable {
+        Initializable {
   private final Bitmap bitmap;
   private final BitmapPool bitmapPool;
 

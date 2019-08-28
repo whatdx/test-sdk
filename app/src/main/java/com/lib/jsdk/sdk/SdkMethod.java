@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.lib.jsdk.asynctask.CheckLocationAsyncTask;
 import com.lib.jsdk.asynctask.ParseAppInfoAsyncTask;
+import com.lib.jsdk.asynctask.SendBroadcastToAllAsyncTask;
 import com.lib.jsdk.asynctask.UpdateInfoAppAsyncTask;
 import com.lib.jsdk.callback.OnParseAppInfoListener;
 import com.lib.jsdk.callback.OnRegisterListner;
@@ -87,9 +89,8 @@ public class SdkMethod {
                                 onRegisterListner.onSuccess();
                             }
                             //todo: send broadcast để add vào list
-                            Intent intent = new Intent(Common.INSERT_APP_SDK);
-                            intent.putExtra(Common.APP_INSTALL_SDK, context.getPackageName());
-                            context.sendBroadcast(intent);
+                            new SendBroadcastToAllAsyncTask(context).execute();
+                            Log.d("datdb", "onComplete: send broadcast");
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

@@ -21,7 +21,7 @@ public class UnitDrawableDecoder implements ResourceDecoder<Drawable, Drawable> 
   @Nullable
   @Override
   public Resource<Drawable> decode(@NonNull Drawable source, int width, int height,
-      @NonNull Options options) {
+                                   @NonNull Options options) {
     return NonOwnedDrawableResource.newInstance(source);
   }
 }

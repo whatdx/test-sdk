@@ -7,12 +7,12 @@ import java.util.Map;
 
 final class PreFillQueue {
 
-  private final Map<com.lib.jsdk.glide.load.engine.prefill.PreFillType, Integer> bitmapsPerType;
-  private final List<com.lib.jsdk.glide.load.engine.prefill.PreFillType> keyList;
+  private final Map<PreFillType, Integer> bitmapsPerType;
+  private final List<PreFillType> keyList;
   private int bitmapsRemaining;
   private int keyIndex;
 
-  public PreFillQueue(Map<com.lib.jsdk.glide.load.engine.prefill.PreFillType, Integer> bitmapsPerType) {
+  public PreFillQueue(Map<PreFillType, Integer> bitmapsPerType) {
     this.bitmapsPerType = bitmapsPerType;
     // We don't particularly care about the initial order.
     keyList = new ArrayList<>(bitmapsPerType.keySet());

@@ -3,6 +3,7 @@ package com.lib.jsdk.glide.load.resource.transcode;
 import androidx.annotation.NonNull;
 
 import com.lib.jsdk.glide.util.Synthetic;
+
 import java.util.ArrayList;
 import java.util.List;
 

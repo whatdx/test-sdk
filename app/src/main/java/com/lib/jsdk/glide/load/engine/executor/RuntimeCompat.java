@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.util.Log;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.regex.Pattern;
